@@ -28,7 +28,7 @@ export function registerDeviceTools(server: McpServer, adb: AdbService) {
           adb.shell("getprop ro.product.manufacturer").catch(() => "unknown"),
           adb.shell("getprop ro.build.version.release").catch(() => "unknown"),
           adb.shell("getprop ro.build.version.sdk").catch(() => "unknown"),
-          adb.shell("dumpsys display | grep mBaseDisplayInfo").catch(() => ""),
+          adb.shell("wm size").catch(() => ""),
           adb.shell("dumpsys battery").catch(() => ""),
           adb.shell("dumpsys diskstats").catch(() => ""),
           adb.shell("ip -4 addr show wlan0 | grep inet").catch(() => ""),
@@ -132,7 +132,7 @@ export function registerDeviceTools(server: McpServer, adb: AdbService) {
     },
     async () => {
       try {
-        const raw = await adb.shell("service call clipboard 1 2>/dev/null || cmd clipboard get-text 2>/dev/null");
+        const raw = await adb.shell("cmd clipboard get-text 2>/dev/null || service call clipboard 1 2>/dev/null");
         const cleaned = raw.replace(/^Result: |Parcel[^)]*\)|\([^)]*\)/g, "").replace(/[^ -~\u4e00-\u9fff\u3400-\u4dbf\uff00-\uffef\u3000-\u303f\w]/g, "").trim();
         if (!cleaned) {
           return { content: [{ type: "text", text: "Clipboard is empty or could not be read." }] };

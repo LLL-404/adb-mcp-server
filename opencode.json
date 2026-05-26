@@ -2,10 +2,10 @@
   "mcpServers": {
     "adb": {
       "command": "node",
-      "args": ["D:\\G\\skill mcp\\adb-mcp-server\\dist\\index.js"],
+      "args": ["D:\\G\\github\\adb-mcp-server\\dist\\index.js"],
       "env": {
         "ADB_PATH": "C:\\Users\\23501\\AppData\\Local\\Android\\platform-tools\\adb.exe",
-        "ADB_SCREENSHOT_DIR": "D:\\G\\skill mcp\\adb-mcp-server\\screenshots"
+        "ADB_SCREENSHOT_DIR": "D:\\G\\github\\adb-mcp-server\\screenshots"
       }
     }
   }
