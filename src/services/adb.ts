@@ -14,7 +14,8 @@ export class AdbService {
     if (envPath && existsSync(envPath)) return envPath;
 
     try {
-      const which = execSync("where adb 2>nul || which adb 2>/dev/null", {
+      const cmd = process.platform === "win32" ? "where adb" : "which adb";
+      const which = execSync(cmd, {
         encoding: "utf-8",
         timeout: 5000,
       }).split("\n")[0].trim();

@@ -34,8 +34,9 @@ export function parseUiDump(xml: string, maxElements = 80): UiElement[] {
 
   let match: RegExpExecArray | null;
   while ((match = nodeRegex.exec(xml)) !== null) {
+    const fullTag = match[0];
     const attrsStr = match[1];
-    if (xml[match.index - 1] === "/") continue;
+    if (fullTag.endsWith("/>")) continue;
 
     const attrs: Record<string, string> = {};
     let attrMatch: RegExpExecArray | null;

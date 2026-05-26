@@ -149,7 +149,7 @@ export function registerAppTools(server: McpServer, adb: AdbService) {
         if (activity) {
           await adb.shell(`am start -n ${pkg}/${activity}`);
         } else {
-          await adb.shell(`monkey -p ${pkg} 1`);
+          await adb.shell(`am start -p ${pkg}`);
         }
         return { content: [{ type: "text", text: `Launched: ${pkg}${activity ? ` / ${activity}` : ""}` }] };
       } catch (error) {
@@ -192,7 +192,7 @@ export function registerAppTools(server: McpServer, adb: AdbService) {
     },
     async () => {
       try {
-        const raw = await adb.shell("dumpsys activity 2>/dev/null | grep -E 'mFocusedApp|mResumedActivity|mCurrentFocus'");
+        const raw = await adb.shell("dumpsys activity 2>/dev/null | grep -e mFocusedApp -e mResumedActivity -e mCurrentFocus");
         const match = raw.match(/([\w.]+)\/([\w.]+)/);
         if (!match) return { content: [{ type: "text", text: `Could not determine current app. Raw: ${raw.trim() || "(empty)"}` }] };
         return {

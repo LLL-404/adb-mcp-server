@@ -73,7 +73,7 @@ export function registerInputTools(server: McpServer, adb: AdbService) {
         const useClipboard = params.method === "clipboard" || (params.method === "auto" && hasUnicode);
 
         if (useClipboard) {
-          await adb.shell(`echo -n ${escapeArg(params.text)} > /sdcard/.adb_text_temp`);
+          await adb.shell(`printf '%s' ${escapeArg(params.text)} > /sdcard/.adb_text_temp`);
           await adb.shell("input keyevent 279");
           await adb.shell("rm -f /sdcard/.adb_text_temp");
         } else {
